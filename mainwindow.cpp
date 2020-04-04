@@ -10,10 +10,13 @@ MainWindow::MainWindow(QWidget *parent)
     timer.setSingleShot(true);
     connect(&timer, &QTimer::timeout, this, [=]{
         QQtool.startSend();
+
+        showTimer.stop();
+        ui->sendButton->setText("立即/定时发送");
     }); // 用信号槽而不用 singleShot 的原因是，可以停下
-    showTimer.setInterval(24);
+    showTimer.setInterval(40);
     connect(&showTimer, &QTimer::timeout, this, [=]{
-        ui->sendButton->setText(QString("%1 秒后发送").arg(timer.remainingTime() / 1000));
+        ui->sendButton->setText(QString("%1 秒后发送").arg((timer.remainingTime() + 900) / 1000));
     });
 
 
