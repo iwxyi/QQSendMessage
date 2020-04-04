@@ -1,9 +1,10 @@
 #ifndef QQSENDTOOL_H
 #define QQSENDTOOL_H
 
-#include<stdio.h>
-#include<windows.h>
-#include<stdlib.h>
+#include <stdio.h>
+#include <windows.h>
+#include <stdlib.h>
+#include <string.h>
 #include <QDebug>
 
 class TCHARTool
@@ -159,7 +160,7 @@ public:
                 {
                     PostMessage(hwnd, WM_CHAR, name[i], 0);
                 }
-                Sleep(500); // 延迟以等待搜索结果（好友数量多或电脑很卡的需要延长）
+                Sleep(1000); // 延迟以等待搜索结果（好友数量多或电脑很卡的需要延长）
                 SendMessage(hwnd, WM_KEYDOWN, VK_RETURN, 0);
 
                 // 发送消息
@@ -174,8 +175,8 @@ public:
                         Sleep(50); // 等待输入结束
     //                    SendMessage(hwnd2, WM_KEYDOWN, VK_LCONTROL, 0); // Ctrl+Enter才能发送
                         SendMessage(hwnd2, WM_KEYDOWN, VK_RETURN, 0); // 发送
-                        qDebug() << ("发送完毕");
                     }
+                    qDebug() << ("发送完毕") << name << beizhu;
                     // Sleep(2000); closeQQ(hwnd2); // 发送结束关闭
                     break;
                 }
@@ -188,8 +189,8 @@ public:
     TCHAR qqh[20] = TEXT("3308218798");//要登录的qq号
     char qqPath[256] = "D:\\Install\\QQ\\Bin\\QQ.exe";
     TCHAR text[256] = TEXT("测试消息");//要发送的内容
-    TCHAR name[25] = TEXT("1600631528");//要发送的qq号
-    TCHAR beizhu[256] = TEXT("命燃芯乂");//检测结果，即要发送的qq号的备注，没有就是网名
+    TCHAR name[25] = TEXT("3308218798");//要发送的qq号
+    TCHAR beizhu[256] = TEXT("三界仙霖之雨");//检测结果，即要发送的qq号的备注，没有就是网名
     TCHAR winname[256] = TEXT("QQ");
     TCHAR Class[256] = TEXT("TXGuiFoundation");
     int u = 1;

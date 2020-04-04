@@ -8,9 +8,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
     timer.setSingleShot(true);
-//    connect(&timer, &QTimer::timeout, this, [=]{
-//        QQtool.startSend();
-//    });
+
 
     char s[256];
     TCHARTool::TcharToChar(QQtool.qqh, s);
@@ -35,6 +33,12 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_sendButton_clicked()
 {
+    TCHARTool::CharToTchar(ui->myQQNumberEdit->text().toLocal8Bit(), QQtool.qqh);
+    strcpy(QQtool.qqPath, ui->qqPathEdit->text().toLocal8Bit());
+    TCHARTool::CharToTchar(ui->targetQQNumberEdit->text().toLocal8Bit(), QQtool.name);
+    TCHARTool::CharToTchar(ui->targetRemarkEdit->text().toLocal8Bit(), QQtool.beizhu);
+    TCHARTool::CharToTchar(ui->sendContentEdit->toPlainText().toLocal8Bit(), QQtool.text);
+
     timer.singleShot(ui->delaySpin->value() * 1000, [=]{
         QQtool.startSend();
     });
