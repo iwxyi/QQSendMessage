@@ -78,11 +78,18 @@
      </layout>
     </item>
     <item>
+     <widget class="QCheckBox" name="pasteCheck">
+      <property name="text">
+       <string>发送剪贴板内容</string>
+      </property>
+     </widget>
+    </item>
+    <item>
      <layout class="QHBoxLayout" name="horizontalLayout_3">
       <item>
        <widget class="QTextEdit" name="sendContentEdit">
         <property name="placeholderText">
-         <string>要发送的内容</string>
+         <string>要发送的文字</string>
         </property>
        </widget>
       </item>
@@ -96,7 +103,7 @@
       <item>
        <widget class="QLabel" name="label_4">
         <property name="text">
-         <string>定时发送（秒）</string>
+         <string>延迟发送（秒）</string>
         </property>
        </widget>
       </item>
@@ -107,6 +114,9 @@
     </item>
     <item>
      <widget class="QCheckBox" name="autoStartCheck">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
       <property name="text">
        <string>开机自启</string>
       </property>

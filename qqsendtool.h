@@ -102,6 +102,55 @@ public:
     }
 
     /**
+     * 此方法来自知乎
+     * 知乎作者：w2014
+     * 回答链接：https://www.zhihu.com/question/383302757/answer/1112581059
+     */
+    void SendCtrlV(){
+        KEYBDINPUT ki;
+        INPUT input;
+
+        ki.wVk = VK_CONTROL;
+        ki.wScan = 0;
+        ki.dwFlags = 0;
+        ki.time = 0;
+        ki.dwExtraInfo = 0;
+        input.type = INPUT_KEYBOARD;
+        input.ki = ki;
+        SendInput(1, &input, sizeof(INPUT));
+        Sleep(50); // 按键需要延迟，以便和下一个按键连接起来
+
+        ki.wVk = 0x56;//'V'
+        ki.wScan = 0;
+        ki.dwFlags = 0;
+        ki.time = 0;
+        ki.dwExtraInfo = 0;
+        input.type = INPUT_KEYBOARD;
+        input.ki = ki;
+        SendInput(1, &input, sizeof(INPUT));
+        Sleep(50);
+
+        ki.wVk = 0x56;//'V'
+        ki.wScan = 0;
+        ki.dwFlags = VK_UP;
+        ki.time = 0;
+        ki.dwExtraInfo = 0;
+        input.type = INPUT_KEYBOARD;
+        input.ki = ki;
+        SendInput(1, &input, sizeof(INPUT));
+        Sleep(50);
+
+        ki.wVk = VK_CONTROL;
+        ki.wScan = 0;
+        ki.dwFlags = VK_UP;
+        ki.time = 0;
+        ki.dwExtraInfo = 0;
+        input.type = INPUT_KEYBOARD;
+        input.ki = ki;
+        SendInput(1, &input, sizeof(INPUT));
+    }
+
+    /**
      * 开始发送
      * 如果QQ未启动，则进行启动
      */
@@ -177,17 +226,26 @@ public:
                 HWND hwnd2 = FindWindow(Class, beizhu);
                 if (hwnd2 != NULL)
                 {
+                    Sleep(100); // 等待打开窗口
                     int count = 1;
                     while (count--)
                     {
-                        for (int i = 0; i < lstrlen(text); i++)
-                            SendMessage(hwnd2, WM_IME_CHAR, text[i], 0);
+                        if (usePaste) // 发送粘贴内容（可与纯文字共存）
+                        {
+                            SendCtrlV();
+                            Sleep(50);
+                        }
+                        if (text[0]) // 逐个输入文字（如果有发送文件，建议之前文字前价格换行）
+                        {
+                            for (int i = 0; i < lstrlen(text); i++)
+                                SendMessage(hwnd2, WM_IME_CHAR, text[i], 0);
+                        }
                         Sleep(50); // 等待输入结束
     //                    SendMessage(hwnd2, WM_KEYDOWN, VK_LCONTROL, 0); // Ctrl+Enter才能发送
                         SendMessage(hwnd2, WM_KEYDOWN, VK_RETURN, 0); // 发送
                     }
                     qDebug() << ("发送完毕");
-                    // Sleep(2000); closeQQ(hwnd2); // 发送结束关闭
+                    // Sleep(2000); closeQQ(hwnd2); // 发送结束关闭QQ
                     break;
                 }
             }
@@ -203,6 +261,7 @@ public:
     TCHAR beizhu[256] = TEXT("追逐繁星的孩子");//检测结果，即要发送的qq号的备注，没有就是网名
     TCHAR winname[256] = TEXT("QQ");
     TCHAR Class[256] = TEXT("TXGuiFoundation");
+    bool usePaste = false;
 };
 
 #endif // QQSENDTOOL_H

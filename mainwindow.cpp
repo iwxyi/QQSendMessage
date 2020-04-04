@@ -38,6 +38,7 @@ void MainWindow::on_sendButton_clicked()
     TCHARTool::CharToTchar(ui->targetQQNumberEdit->text().toLocal8Bit(), QQtool.name);
     TCHARTool::CharToTchar(ui->targetRemarkEdit->text().toLocal8Bit(), QQtool.beizhu);
     TCHARTool::CharToTchar(ui->sendContentEdit->toPlainText().toLocal8Bit(), QQtool.text);
+    QQtool.usePaste = ui->pasteCheck->isChecked();
 
     timer.singleShot(ui->delaySpin->value() * 1000, [=]{
         QQtool.startSend();
