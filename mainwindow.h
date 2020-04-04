@@ -3,6 +3,8 @@
 
 #include <QMainWindow>
 #include <QTimer>
+#include <QSettings>
+#include <QStandardPaths>
 #include "qqsendtool.h"
 
 QT_BEGIN_NAMESPACE
@@ -22,6 +24,7 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
+    QSettings st;
     QQSendTool QQtool;
     QTimer timer;
     QTimer showTimer;

@@ -2,8 +2,10 @@
 #include "ui_mainwindow.h"
 
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent)
-    , ui(new Ui::MainWindow)
+    : QMainWindow(parent),
+      ui(new Ui::MainWindow),
+      st(/*QStandardPaths::writableLocation(QStandardPaths::AppDataLocation)*/ + "settings.ini")
+
 {
     ui->setupUi(this);
 
@@ -22,18 +24,21 @@ MainWindow::MainWindow(QWidget *parent)
 
     char s[256];
     TCHARTool::TcharToChar(QQtool.qqh, s);
-    ui->myQQNumberEdit->setText(QString::fromLocal8Bit(s));
+    ui->myQQNumberEdit->setText(st.contains("myQQNumber") ? st.value("myQQNumber").toString() : QString::fromLocal8Bit(s));
 
-    ui->qqPathEdit->setText(QQtool.qqPath);
+    ui->qqPathEdit->setText(st.contains("qqPath") ? st.value("qqPath").toString() : QQtool.qqPath);
 
     TCHARTool::TcharToChar(QQtool.name, s);
-    ui->targetQQNumberEdit->setText(QString::fromLocal8Bit(s));
+    ui->targetQQNumberEdit->setText(st.contains("targetQQNumber") ? st.value("targetQQNumber").toString() : QString::fromLocal8Bit(s));
 
     TCHARTool::TcharToChar(QQtool.beizhu, s);
-    ui->targetRemarkEdit->setText(QString::fromLocal8Bit(s));
+    ui->targetRemarkEdit->setText(st.contains("targetRemark") ? st.value("targetRemark").toString() : QString::fromLocal8Bit(s));
 
     TCHARTool::TcharToChar(QQtool.text, s);
-    ui->sendContentEdit->setText(QString::fromLocal8Bit(s));
+    ui->sendContentEdit->setText(st.contains("sendContext") ? st.value("sendContext").toString() : QString::fromLocal8Bit(s));
+
+    ui->pasteCheck->setChecked(st.contains("usePaste") ? st.value("usePaste").toBool() : QQtool.usePaste);
+    ui->ctrlEnterCheck->setChecked(st.contains("useCtrlEnter") ? st.value("useCtrlEnter").toBool() : QQtool.useCtrlEnter);
 }
 
 MainWindow::~MainWindow()
@@ -59,7 +64,15 @@ void MainWindow::on_sendButton_clicked()
     QQtool.usePaste = ui->pasteCheck->isChecked();
     QQtool.useCtrlEnter = ui->ctrlEnterCheck->isChecked();
 
+    st.setValue("myQQNumber", ui->myQQNumberEdit->text());
+    st.setValue("qqPath", ui->qqPathEdit->text());
+    st.setValue("targetQQNumber", ui->targetQQNumberEdit->text());
+    st.setValue("targetRemark", ui->targetRemarkEdit->text());
+    st.setValue("sendContent", ui->sendContentEdit->toPlainText());
+    st.setValue("usePaste", ui->pasteCheck->isChecked());
+    st.setValue("useCtrlEnter", ui->ctrlEnterCheck->isChecked());
+    st.sync();
+
     timer.start(ui->delaySpin->value() * 1000);
     showTimer.start();
-    ui->sendButton->setText("停止");
 }
