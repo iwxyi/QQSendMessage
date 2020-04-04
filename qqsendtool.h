@@ -6,6 +6,26 @@
 #include<stdlib.h>
 #include <QDebug>
 
+class TCHARTool
+{
+public:
+    static void TcharToChar(const TCHAR * tchar, char * _char)
+    {
+        int iLength;
+        //获取字节长度
+        iLength = WideCharToMultiByte(CP_ACP, 0, tchar, -1, NULL, 0, NULL, NULL);
+        //将tchar值赋给_char
+        WideCharToMultiByte(CP_ACP, 0, tchar, -1, _char, iLength, NULL, NULL);
+    }
+
+    static void CharToTchar(const char * _char, TCHAR * tchar)
+    {
+        int iLength;
+        iLength = MultiByteToWideChar(CP_ACP, 0, _char, strlen(_char) + 1, NULL, 0);
+        MultiByteToWideChar(CP_ACP, 0, _char, strlen(_char) + 1, tchar, iLength);
+    }
+};
+
 class QQSendTool
 {
 public:
@@ -19,7 +39,7 @@ public:
         {
             //如果qq没运行就打开
             qDebug() << ("窗口不存在,正在启动应用\n");
-            system("D:\\Install\\QQ\\Bin\\QQ.exe");//你的qq程序的地址
+            system(qqPath);//你的qq程序的地址
             qDebug() << ("请稍等\n");
         }
         while (1)
@@ -166,6 +186,7 @@ public:
 public:
     RECT rect = { 0,0,0,0 };
     TCHAR qqh[20] = TEXT("3308218798");//要登录的qq号
+    char qqPath[256] = "D:\\Install\\QQ\\Bin\\QQ.exe";
     TCHAR text[256] = TEXT("测试消息");//要发送的内容
     TCHAR name[25] = TEXT("1600631528");//要发送的qq号
     TCHAR beizhu[256] = TEXT("命燃芯乂");//检测结果，即要发送的qq号的备注，没有就是网名

@@ -28,7 +28,24 @@
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="lineEdit_3"/>
+       <widget class="QLineEdit" name="myQQNumberEdit"/>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_6">
+      <property name="topMargin">
+       <number>9</number>
+      </property>
+      <item>
+       <widget class="QLabel" name="label_5">
+        <property name="text">
+         <string>QQ程序路径</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="qqPathEdit"/>
       </item>
      </layout>
     </item>
@@ -42,7 +59,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="lineEdit"/>
+       <widget class="QLineEdit" name="targetQQNumberEdit"/>
       </item>
      </layout>
     </item>
@@ -56,14 +73,14 @@
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="lineEdit_2"/>
+       <widget class="QLineEdit" name="targetRemarkEdit"/>
       </item>
      </layout>
     </item>
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout_3">
       <item>
-       <widget class="QTextEdit" name="textEdit">
+       <widget class="QTextEdit" name="sendContentEdit">
         <property name="placeholderText">
          <string>要发送的内容</string>
         </property>
@@ -84,21 +101,21 @@
        </widget>
       </item>
       <item>
-       <widget class="QLineEdit" name="lineEdit_4"/>
+       <widget class="QSpinBox" name="delaySpin"/>
       </item>
      </layout>
     </item>
     <item>
-     <widget class="QCheckBox" name="checkBox">
+     <widget class="QCheckBox" name="autoStartCheck">
       <property name="text">
        <string>开机自启</string>
       </property>
      </widget>
     </item>
     <item>
-     <widget class="QPushButton" name="pushButton">
+     <widget class="QPushButton" name="sendButton">
       <property name="text">
-       <string>开始</string>
+       <string>立即/定时发送</string>
       </property>
      </widget>
     </item>
