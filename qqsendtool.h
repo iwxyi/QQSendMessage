@@ -150,6 +150,73 @@ public:
         SendInput(1, &input, sizeof(INPUT));
     }
 
+    void SendEnter(){
+        KEYBDINPUT ki;
+        INPUT input;
+
+        ki.wVk = VK_RETURN;
+        ki.wScan = 0;
+        ki.dwFlags = 0;
+        ki.time = 0;
+        ki.dwExtraInfo = 0;
+        input.type = INPUT_KEYBOARD;
+        input.ki = ki;
+        SendInput(1, &input, sizeof(INPUT));
+
+        ki.wVk = VK_RETURN;
+        ki.wScan = 0;
+        ki.dwFlags = VK_UP;
+        ki.time = 0;
+        ki.dwExtraInfo = 0;
+        input.type = INPUT_KEYBOARD;
+        input.ki = ki;
+        SendInput(1, &input, sizeof(INPUT));
+    }
+
+    void SendCtrlEnter(){
+        KEYBDINPUT ki;
+        INPUT input;
+
+        ki.wVk = VK_CONTROL;
+        ki.wScan = 0;
+        ki.dwFlags = 0;
+        ki.time = 0;
+        ki.dwExtraInfo = 0;
+        input.type = INPUT_KEYBOARD;
+        input.ki = ki;
+        SendInput(1, &input, sizeof(INPUT));
+        Sleep(50); // 按键需要延迟，以便和下一个按键连接起来
+
+        ki.wVk = VK_RETURN;
+        ki.wScan = 0;
+        ki.dwFlags = 0;
+        ki.time = 0;
+        ki.dwExtraInfo = 0;
+        input.type = INPUT_KEYBOARD;
+        input.ki = ki;
+        SendInput(1, &input, sizeof(INPUT));
+        Sleep(50);
+
+        ki.wVk = VK_RETURN;
+        ki.wScan = 0;
+        ki.dwFlags = VK_UP;
+        ki.time = 0;
+        ki.dwExtraInfo = 0;
+        input.type = INPUT_KEYBOARD;
+        input.ki = ki;
+        SendInput(1, &input, sizeof(INPUT));
+        Sleep(50);
+
+        ki.wVk = VK_CONTROL;
+        ki.wScan = 0;
+        ki.dwFlags = VK_UP;
+        ki.time = 0;
+        ki.dwExtraInfo = 0;
+        input.type = INPUT_KEYBOARD;
+        input.ki = ki;
+        SendInput(1, &input, sizeof(INPUT));
+    }
+
     /**
      * 开始发送
      * 如果QQ未启动，则进行启动
@@ -241,8 +308,11 @@ public:
                                 SendMessage(hwnd2, WM_IME_CHAR, text[i], 0);
                         }
                         Sleep(50); // 等待输入结束
-    //                    SendMessage(hwnd2, WM_KEYDOWN, VK_LCONTROL, 0); // Ctrl+Enter才能发送
-                        SendMessage(hwnd2, WM_KEYDOWN, VK_RETURN, 0); // 发送
+                        if (useCtrlEnter)
+                            SendCtrlEnter();
+                        else
+                            SendEnter();
+//                        SendMessage(hwnd2, WM_KEYDOWN, VK_RETURN, 0); // 发送
                     }
                     qDebug() << ("发送完毕");
                     // Sleep(2000); closeQQ(hwnd2); // 发送结束关闭QQ
@@ -261,7 +331,8 @@ public:
     TCHAR beizhu[256] = TEXT("追逐繁星的孩子");//检测结果，即要发送的qq号的备注，没有就是网名
     TCHAR winname[256] = TEXT("QQ");
     TCHAR Class[256] = TEXT("TXGuiFoundation");
-    bool usePaste = false;
+    bool usePaste = false; // 发送
+    bool useCtrlEnter = false;
 };
 
 #endif // QQSENDTOOL_H

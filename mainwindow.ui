@@ -23,7 +23,7 @@
       <item>
        <widget class="QLabel" name="label_3">
         <property name="text">
-         <string>自己的QQ号(自动登录)</string>
+         <string>自己的QQ号(可选)</string>
         </property>
        </widget>
       </item>
@@ -40,7 +40,7 @@
       <item>
        <widget class="QLabel" name="label_5">
         <property name="text">
-         <string>QQ程序路径</string>
+         <string>QQ程序路径(用于自动登录)</string>
         </property>
        </widget>
       </item>
@@ -54,7 +54,7 @@
       <item>
        <widget class="QLabel" name="label">
         <property name="text">
-         <string>发送的QQ号码</string>
+         <string>接收目标的QQ号码</string>
         </property>
        </widget>
       </item>
@@ -80,7 +80,7 @@
     <item>
      <widget class="QCheckBox" name="pasteCheck">
       <property name="text">
-       <string>发送剪贴板内容</string>
+       <string>发送剪贴板内容（可与文字共存）</string>
       </property>
      </widget>
     </item>
@@ -123,9 +123,26 @@
      </widget>
     </item>
     <item>
+     <widget class="QCheckBox" name="ctrlEnterCheck">
+      <property name="text">
+       <string>使用 Ctrl+Enter 发送</string>
+      </property>
+     </widget>
+    </item>
+    <item>
      <widget class="QPushButton" name="sendButton">
       <property name="text">
        <string>立即/定时发送</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="label_6">
+      <property name="text">
+       <string>请确保没有打开其他会话</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
       </property>
      </widget>
     </item>

@@ -24,5 +24,6 @@ private:
     Ui::MainWindow *ui;
     QQSendTool QQtool;
     QTimer timer;
+    QTimer showTimer;
 };
 #endif // MAINWINDOW_H
