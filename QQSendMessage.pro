@@ -17,8 +17,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     main.cpp \
-    mainwindow.cpp \
-    qqsendtool.cpp
+    mainwindow.cpp
 
 HEADERS += \
     mainwindow.h \
