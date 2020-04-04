@@ -1,6 +1,12 @@
 #ifndef QQSENDTOOL_H
 #define QQSENDTOOL_H
 
+/**
+  * 本程序修改自：知乎用户 派大星
+  * 回答链接：https://www.zhihu.com/question/383302757/answer/1114383075
+  * 由于用 Qt Creator 运行，printf 中文乱码，改用为 QDebug 输出
+  */
+
 #include <stdio.h>
 #include <windows.h>
 #include <stdlib.h>
@@ -104,6 +110,7 @@ public:
         findQQWindowOrStart(Class, winname);
 
         int u = 1;
+        int retryCount = 0; // 限制重试次数，避免一直卡在发送部分
 
         while (1)
         {
@@ -144,6 +151,9 @@ public:
             else if ((rect.bottom - rect.top) >= 500)
             {
                 qDebug() << ("已登录");
+                retryCount++;
+                if (retryCount > 20) // 最多重试20次
+                    return ;
                 ShowWindow(hwnd, SW_RESTORE);//如果qq最小化，将其激活
                 Sleep(500);
 
@@ -176,7 +186,7 @@ public:
     //                    SendMessage(hwnd2, WM_KEYDOWN, VK_LCONTROL, 0); // Ctrl+Enter才能发送
                         SendMessage(hwnd2, WM_KEYDOWN, VK_RETURN, 0); // 发送
                     }
-                    qDebug() << ("发送完毕") << name << beizhu;
+                    qDebug() << ("发送完毕");
                     // Sleep(2000); closeQQ(hwnd2); // 发送结束关闭
                     break;
                 }
@@ -186,14 +196,13 @@ public:
 
 public:
     RECT rect = { 0,0,0,0 };
-    TCHAR qqh[20] = TEXT("3308218798");//要登录的qq号
+    TCHAR qqh[20] = TEXT("1600631528");//要登录的qq号
     char qqPath[256] = "D:\\Install\\QQ\\Bin\\QQ.exe";
     TCHAR text[256] = TEXT("测试消息");//要发送的内容
-    TCHAR name[25] = TEXT("3308218798");//要发送的qq号
-    TCHAR beizhu[256] = TEXT("三界仙霖之雨");//检测结果，即要发送的qq号的备注，没有就是网名
+    TCHAR name[25] = TEXT("482582886");//要发送的qq号
+    TCHAR beizhu[256] = TEXT("追逐繁星的孩子");//检测结果，即要发送的qq号的备注，没有就是网名
     TCHAR winname[256] = TEXT("QQ");
     TCHAR Class[256] = TEXT("TXGuiFoundation");
-    int u = 1;
 };
 
 #endif // QQSENDTOOL_H
